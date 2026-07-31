@@ -21,3 +21,13 @@
 - learned how to create a veiw function using django.http response 
 - basically we make a function with requests attribute and return httpresponse 
 - we always end our routes with / 
+
+# day 5 31st july 2026 learned Routing
+- I got a basic idea how websites links have paths and how they work. 
+- Start by creating a new application in django using the command python3 manage.py startapp "App_Name"
+- once the app is created we create a function in views.py using HttpResponse we can requst and get responses 
+- we create new urls file in application folder and map the views functions into urls file
+- after mapping we go to the main urls file use include library and include the paths in the application/urls.py 
+- with this procedure we be able to do things like website/router/greetings or /mywebsite
+## I have successfully created a template then added my index.html into it, then added a function in views.py using render thing 
+- the day was nice I take it as a win learned a little bit understood there's a lot to learn
