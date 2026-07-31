@@ -16,3 +16,8 @@
 * how do we start projects in django ? 
 - pyhton3 -m django startproject project_name 
 - once starting the project is finished we get to see a folder named after the project inside our project folder 
+
+# day 4 27th july 2026 
+- learned how to create a veiw function using django.http response 
+- basically we make a function with requests attribute and return httpresponse 
+- we always end our routes with / 
