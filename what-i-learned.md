@@ -1,6 +1,6 @@
 # MY learning journey 
 
-## day 2.   19th/july/2026
+# day 2.   19th/july/2026
 - I learned how to make a website reacive fies
 ` <input type="file"> ` 
 - revised how we link html file with css 
@@ -9,7 +9,7 @@
 - revised css 
 - anything inside head isn't visible. script in the <body> has effects on the website
 
-## day 3. 26th july 2026
+# day 3. 26th july 2026
 - learned how do we install django pip install django
 - we use django for backend purpose its a backend framework built for python 
 - once its installed we go like python3 -m django --version to check its version
@@ -31,3 +31,22 @@
 - with this procedure we be able to do things like website/router/greetings or /mywebsite
 ## I have successfully created a template then added my index.html into it, then added a function in views.py using render thing 
 - the day was nice I take it as a win learned a little bit understood there's a lot to learn
+
+## day 6 2nd august 2026 
+- learned how we write comments in HTML we use 
+    'html 
+    <!-- that's how you do it -->
+- learned how we make a functionig upload button in html 
+
+## day 7 14th august 2026
+- learned how you save files requested by html - save_file = request.FILES["uploaded_file"]
+- Learned a new Library pymupdf. we use this library to extract text out of pdfs 
+- Learned few syntax of pymupdf such as :
+* doc = pymupdf.open ("file_name") 
+out = open("output.txt", "wb") wb stands for write binary - it opens files and   writes binary in it 
+- for page in doc : 
+    text = page.get_text().encode("utf-8")
+    out.write(text)
+    out.write((12,)) # this tells editor to use new file
+    out.close
+# I feel like this project is teaching me lot 10x more than any college ever would

@@ -12,15 +12,19 @@
         This website turns your pdf into knowledge base 
     </h1>
     </div>
-    <div class="pdfbox">
-        <p class="inbox"> drop your pdf here</p>
-        <input type="file" accept=".pdf">
-        <p>only pdfs are allowed</p>
+   
+    <div>
+        <form action="router/uploaded/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!--thats how we write comments in html bro-->
+            <label for="file-chooser">choose a file to upload:</label>
+            <input type="file" accept=".pdf" id="file-chooser" name="uploaded-file">
+
+            <!-- the upload button-->
+             <button type="submit">Upload</button>
+
+        </form>
     </div>
-
-
-        
-    
-
 </body>
-</html>
+</html>    

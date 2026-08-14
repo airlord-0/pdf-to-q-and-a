@@ -15,3 +15,10 @@ def say_hello(request):
 
 def website (request):
     return render(request,'index.html')
+
+# file upload page 
+def uploaded (request):
+    print(request.FILES)
+    uploaded_file = request.FILES['uploaded-file']
+   
+    return HttpResponse("file uploaded successfully :)")
