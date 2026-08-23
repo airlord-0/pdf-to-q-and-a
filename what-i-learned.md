@@ -50,3 +50,10 @@ out = open("output.txt", "wb") wb stands for write binary - it opens files and  
     out.write((12,)) # this tells editor to use new file
     out.close
 # I feel like this project is teaching me lot 10x more than any college ever would
+
+## day 8 18th august 2026 
+- learned CHUNKING, splitting a big document into smaller units so that It could fit in strict context size window of embedding models and LLMs 
+- Leaned how we split text using langchain's RecursiveCharacterTextSplitter and store these in langchain's Documents with calculated metadata 
+- spent 5 hours on finding the best chunking method for me and learning the actual production grade code from [data_bricks](https://community.databricks.com/t5/technical-blog/the-ultimate-guide-to-chunking-strategies-for-rag-applications/ba-p/113089)
+
+### my learning strategy : 20% consume 80% apply been super effective so far 
