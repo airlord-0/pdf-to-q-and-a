@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.core.files.storage import default_storage
 from router.pdfExtractor import pdf_extractor
 from router.chunker import text_splitter
+from router.embedder import gem_embedder
 
 
 
@@ -16,22 +17,40 @@ def website (request):
 
 # file upload page 
 def uploaded (request):
+    # get the file path
     uploaded_file = request.FILES['uploaded-file']
     file_path = default_storage.save (
         uploaded_file.name, 
         uploaded_file
     )
+    # store the file path
     full_path=default_storage.path(file_path)
     print(full_path)
+
+    # extract the text from the pdf
     text = pdf_extractor(full_path)
+
+    # check whats been extracted
     print("################  here is the text \n")
     print(text)
-    chunks = text_splitter(text,500,100)
-    print(chunks)
+
+   # break the extracted document into smaller pieces
+    units = text_splitter(text,500,100)
+    print(units)
+    print("number of units : ", len(units))
+    for i, unit in enumerate (units) :
+        print("unit",i, "type: ", type(unit) )
+    
+
+
+    # pass chunks to embedder -> convert into word embeddings 
+    vectors = gem_embedder(units)
+    print(vectors)
+
 
     print (file_path)
     
 
     return HttpResponse(f"file uploaded successfully : {str(file_path)}")
 
-
+  
