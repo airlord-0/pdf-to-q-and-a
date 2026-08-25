@@ -57,3 +57,12 @@ out = open("output.txt", "wb") wb stands for write binary - it opens files and  
 - spent 5 hours on finding the best chunking method for me and learning the actual production grade code from [data_bricks](https://community.databricks.com/t5/technical-blog/the-ultimate-guide-to-chunking-strategies-for-rag-applications/ba-p/113089)
 
 ### my learning strategy : 20% consume 80% apply been super effective so far 
+
+## day 9 23rd august 2026 
+- learned google SDK, got the "google-gemini-embedder" api key and wrote a simple code to check its functioning 
+- the Problem is my chunker.py is returning Documets which includes page_contents and meta data and my api key has no idea how to deal with it - I would have to figure chunker to return sufficient page_content and instruct api to batch process it 
+
+## day 10 25th august 2026 
+- hit a Problem : number of chunks are 8 while number of embeddings my embedder.py is generating 1 embedding. 
+- the solution : in chunker.py "chunks" is a list of strings, each string is my individual chunk to be embedded. I can pass each string one by one to the api key making number of api calls = number of strings in the "chunks"
+- milestone 2 : Embeddings completes :) 

@@ -24,6 +24,7 @@ def text_splitter (document, chunk_size = 500, chunk_overlap = 10) :
     ]
 
     documents =[]
+    
     section = 'introduction'
     for i, chunk in enumerate (chunks) :
         chunk_lines= chunk.split('\n')
@@ -35,7 +36,7 @@ def text_splitter (document, chunk_size = 500, chunk_overlap = 10) :
                     break
 
     # lets give our documents some meta data as well 
-        words= [re.findall(r'\bw+\b',chunk.lower())]
+        words= re.findall(r'\bw+\b',chunk.lower()) # re.findall already returns list if put in brackets it returns nested lists
         stopwords=["for","the","a","is","are","was","were","been","has","have","had"] 
         useful_words = [w for w in words if w not in stopwords]
         semantic_density = (len(useful_words))/max(1,(len(words))) # prevent ZeroDivisionError
@@ -52,7 +53,12 @@ def text_splitter (document, chunk_size = 500, chunk_overlap = 10) :
                         ) # debugged =, metadata is a dictionary we use : not = 
 
         documents.append(doc)
-    return documents 
+    print("######### number of chunks : ", len(chunks), "###########")   
+    #to_embded = Document.page_content
+    #print("*********",to_embded)
+   # print(type(to_embded))
+        
+    return [doc.page_content for doc in documents]
 
 
 
