@@ -65,4 +65,10 @@ out = open("output.txt", "wb") wb stands for write binary - it opens files and  
 ## day 10 25th august 2026 
 - hit a Problem : number of chunks are 8 while number of embeddings my embedder.py is generating 1 embedding. 
 - the solution : in chunker.py "chunks" is a list of strings, each string is my individual chunk to be embedded. I can pass each string one by one to the api key making number of api calls = number of strings in the "chunks"
-- milestone 2 : Embeddings completes :) 
+- milestone 2 : Embeddings completes :)
+
+## day 11 28th august 2026 
+- Found a way to store my embeddings for free :) Big thanks to Pinecone — they gave me an API key the moment I signed up. 0 clicks.
+- Turns out storing embeddings isn't as simple as appending them one by one. I need to build a system that stores a searchable representation of the knowledge in my documents.
+- there's another pipeline for querry as 
+- user questions -> convert questoin to embeddings with same api -> compare the question embeddings with stored embeddings -> find the most relavent chunk -> pack chunk + question -> send it to the llm -> print the result 
