@@ -35,16 +35,11 @@ def uploaded (request):
     print(text)
 
    # break the extracted document into smaller pieces
-    units = text_splitter(text,500,100)
-    print(units)
-    print("number of units : ", len(units))
-    for i, unit in enumerate (units) :
-        print("unit",i, "type: ", type(unit) )
+    unit,metadatas= text_splitter(text,500,100) # the function is first returning the units then metadata
     
 
-
     # pass chunks to embedder -> convert into word embeddings 
-    vectors = gem_embedder(units)
+    vectors = gem_embedder(unit)
     print(vectors)
 
 

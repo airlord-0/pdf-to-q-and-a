@@ -16,6 +16,7 @@ def gem_embedder (chunks) :
         )
         print(chunk)
         embedding.append(result.embeddings[0])
-    print("######## number of embeddings : ", len(embedding),"########")
+    print("Embeddings Successfull ","number of embeddings produced : ", len(embedding),"\n")
+  
     return embedding
 
