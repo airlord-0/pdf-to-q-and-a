@@ -4,6 +4,7 @@ from django.core.files.storage import default_storage
 from router.pdfExtractor import pdf_extractor
 from router.chunker import text_splitter
 from router.embedder import gem_embedder
+from router.database import vectorbase_upsert
 
 
 
@@ -35,20 +36,19 @@ def uploaded (request):
     print(text)
 
    # break the extracted document into smaller pieces
-    units = text_splitter(text,500,100)
-    print(units)
-    print("number of units : ", len(units))
-    for i, unit in enumerate (units) :
-        print("unit",i, "type: ", type(unit) )
+    unit,metadatas= text_splitter(text,500,100) # the function is first returning the units then metadata
     
 
-
     # pass chunks to embedder -> convert into word embeddings 
-    vectors = gem_embedder(units)
+    vectors = gem_embedder(unit)
     print(vectors)
 
 
-    print (file_path)
+    # store embeddings and units as with other metadata as a record 
+    doc_id = 1
+    batch_size = 100
+    vectorbase_upsert(unit,vectors,metadatas,doc_id,batch_size)
+
     
 
     return HttpResponse(f"file uploaded successfully : {str(file_path)}")

@@ -65,4 +65,23 @@ out = open("output.txt", "wb") wb stands for write binary - it opens files and  
 ## day 10 25th august 2026 
 - hit a Problem : number of chunks are 8 while number of embeddings my embedder.py is generating 1 embedding. 
 - the solution : in chunker.py "chunks" is a list of strings, each string is my individual chunk to be embedded. I can pass each string one by one to the api key making number of api calls = number of strings in the "chunks"
-- milestone 2 : Embeddings completes :) 
+- milestone 2 : Embeddings completes :)
+
+## day 11 28th august 2026 
+- Found a way to store my embeddings for free :) Big thanks to Pinecone — they gave me an API key the moment I signed up. 0 clicks.
+- Turns out storing embeddings isn't as simple as appending them one by one. I need to build a system that stores a searchable representation of the knowledge in my documents.
+- there's another pipeline for querry as 
+- user questions -> convert questoin to embeddings with same api -> compare the question embeddings with stored embeddings -> find the most relavent chunk -> pack chunk + question -> send it to the llm -> print the result 
+
+# day 12 29th august 2026 
+- its interesting that each service related to software has its own sdk software development kit. Different different kits come with its own syntax and stype 
+
+# day 13 30th aug 2026
+- learned how to structure the data my functions are producing. 
+- how to get a function return 2 things and store them in 2 objects
+- my chunker.py returns units and metadata, I can do a,b = function(text) to store a=units and b = metadata. later pass these units to embedder.py 
+- now I know how to store all these units_id,unit_contents, units embeddings in pinecone index 
+- make a function that takes all these 3 attributes and upsert this to the database. 
+
+# day 15th 1st september 20206
+- learned to create index in pinecone and other pinecone functions to upsert, delete, querry, fetch. learned python tricks to assign parameter to expect a datatype such as def function (name:str, age:int), and **dict_name gives the content of the dict_name, list[i:i+batch], so on

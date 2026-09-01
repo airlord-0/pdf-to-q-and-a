@@ -1,8 +1,7 @@
-
+# tuning required : section 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 import re
-
 
 def text_splitter (document, chunk_size = 500, chunk_overlap = 10) :
 
@@ -23,7 +22,8 @@ def text_splitter (document, chunk_size = 500, chunk_overlap = 10) :
         r'^[A-Z\s]+:$'       # ALL CAPS section titles
     ]
 
-    documents =[]
+    units =[]
+    metadata=[]
     
     section = 'introduction'
     for i, chunk in enumerate (chunks) :
@@ -36,29 +36,32 @@ def text_splitter (document, chunk_size = 500, chunk_overlap = 10) :
                     break
 
     # lets give our documents some meta data as well 
-        words= re.findall(r'\bw+\b',chunk.lower()) # re.findall already returns list if put in brackets it returns nested lists
+        words= re.findall(r'\b\w+\b',chunk.lower()) # re.findall already returns list if put in brackets it returns nested lists
         stopwords=["for","the","a","is","are","was","were","been","has","have","had"] 
         useful_words = [w for w in words if w not in stopwords]
         semantic_density = (len(useful_words))/max(1,(len(words))) # prevent ZeroDivisionError
 
-        doc = Document(page_content=chunk,
-                         metadata = {
+  
+        meta = {
                             "chunk_id" : i,
-                            "chunk_size" : len(chunks),
+                            "chunk_size" : len(chunk),
                             "chunk_type" : "semantic",
                             "semantic_density" : round(semantic_density,2),
                             "total_chunk_size" : len(words),
                             "section" : section
                          }
-                        ) # debugged =, metadata is a dictionary we use : not = 
-
-        documents.append(doc)
-    print("######### number of chunks : ", len(chunks), "###########")   
-    #to_embded = Document.page_content
-    #print("*********",to_embded)
-   # print(type(to_embded))
+                        # debugged =, metadata is a dictionary we use : not = 
         
-    return [doc.page_content for doc in documents]
+        units.append(chunk)
+        metadata.append(meta)
+    print("Chunking Successfull ","number of chunks Produced: ", len(units),"\n")
+
+        
+ 
+    return units,metadata
+
+
+
 
 
 
