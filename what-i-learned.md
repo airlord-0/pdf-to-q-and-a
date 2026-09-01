@@ -77,8 +77,11 @@ out = open("output.txt", "wb") wb stands for write binary - it opens files and  
 - its interesting that each service related to software has its own sdk software development kit. Different different kits come with its own syntax and stype 
 
 # day 13 30th aug 2026
-- learned how to structer the data my functions are producing. 
+- learned how to structure the data my functions are producing. 
 - how to get a function return 2 things and store them in 2 objects
 - my chunker.py returns units and metadata, I can do a,b = function(text) to store a=units and b = metadata. later pass these units to embedder.py 
 - now I know how to store all these units_id,unit_contents, units embeddings in pinecone index 
 - make a function that takes all these 3 attributes and upsert this to the database. 
+
+# day 15th 1st september 20206
+- learned to create index in pinecone and other pinecone functions to upsert, delete, querry, fetch. learned python tricks to assign parameter to expect a datatype such as def function (name:str, age:int), and **dict_name gives the content of the dict_name, list[i:i+batch], so on
