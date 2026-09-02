@@ -4,15 +4,7 @@ from dotenv import load_dotenv
 load_dotenv ()
 
 pc = Pinecone()
-pc.create_index(
-    name="context",
-    dimension=3072,
-    metric="cosine",
-    spec=ServerlessSpec (
-        cloud="aws",
-        region= "us-east-1"
-    )
-)
+
 index=pc.Index("context")
 
 def vectorbase_upsert (
@@ -56,8 +48,8 @@ def vectorbase_upsert (
         index.upsert(vectors=batch) # upsert(), has a parameter vectors, provided by pinecone pdk
                                     # there are other functions -> index.delete(),querry(),fetch etc 
 
-   
-    print("successfully upserted records","number of records : ", len(index))
+    print("successfully upserted records")
+
         
        
     
