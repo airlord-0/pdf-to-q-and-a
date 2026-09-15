@@ -6,4 +6,3 @@ def pdf_extractor(file_path) :
     for page in doc :
         out += page.get_text()
     return out
-
