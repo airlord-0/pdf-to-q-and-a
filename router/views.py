@@ -1,56 +1,34 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.core.files.storage import default_storage
-from router.pdfExtractor import pdf_extractor
-from router.chunker import text_splitter
-from router.embedder import gem_embedder
-from router.database import vectorbase_upsert
+from django.http import JsonResponse 
+from django.shortcuts import render # to display my page
+from django.core.files.storage import default_storage 
 
+def home(request) :
+    return render(request,"index.html") 
 
-
-# Create your views here.
-# views in request - response module 
-# othe frameworks call it actions 
-
-
-def website (request):
-    return render(request,'index.html')
-
-# file upload page 
-def uploaded (request):
-    # get the file path
+def uploaded(request) :
+    
+    # get the uploaded file name and print it 
     uploaded_file = request.FILES['uploaded-file']
-    file_path = default_storage.save (
-        uploaded_file.name, 
+    file_path = default_storage.save(
+        uploaded_file.name,
         uploaded_file
     )
-    # store the file path
-    full_path=default_storage.path(file_path)
+    full_path = default_storage.path(file_path)
     print(full_path)
+    print("pdf recieved ", uploaded_file.name)
 
-    # extract the text from the pdf
-    text = pdf_extractor(full_path)
+    return JsonResponse({
+        "server says" : f"{uploaded_file.name} uploaded successfully "
+    })
 
-    # check whats been extracted
-    print("################  here is the text \n")
-    print(text)
+def questions(request) :
+    # get the user question from the server and print it 
 
-   # break the extracted document into smaller pieces
-    unit,metadatas= text_splitter(text,500,100) # the function is first returning the units then metadata
-    
+    questions = request.POST['question']
+    print("question received ", questions)
 
-    # pass chunks to embedder -> convert into word embeddings 
-    vectors = gem_embedder(unit)
-    print(vectors)
+    return JsonResponse ({
+        "answer" : f"{questions} has been received  "
+    })
 
-
-    # store embeddings and units as with other metadata as a record 
-    doc_id = 1
-    batch_size = 100
-    vectorbase_upsert(unit,vectors,metadatas,doc_id,batch_size)
-
-    
-
-    return HttpResponse(f"file uploaded successfully : {str(file_path)}")
-
-  
+     

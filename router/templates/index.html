@@ -1,41 +1,100 @@
+
+{% load static %}
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>drop a pdf</title>
-    <link rel="stylesheet" href="design.css">
 
+    <title>PDF Knowledge Base</title>
+
+    <link rel="stylesheet" href="{% static 'router/design.css' %}">
+    <link rel="icon" href="data:;base64,=">
 </head>
+
 <body>
-    <div class="Heading">
-    <h1>
-        This website turns your pdf into knowledge base 
-    </h1>
-    </div>
-   
-    <div>
-        <form action="router/uploaded/" method="post" enctype="multipart/form-data">
+
+    <main class="app">
+
+        <header class="header">
+            <h1>PDF Knowledge Base</h1>
+            <p>Upload a document and ask questions about it.</p>
+        </header>
+
+
+        <!-- the chat area -->>
+
+        <section id="chat-box" class="chat-box">
+
+            <div class="message bot-message">
+                <p>
+                    Upload a PDF and I'll help you find information inside it.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- UPLOAD -->
+
+        <form id="upload-form"
+              method="POST"
+              action="/router/uploaded/"
+              enctype="multipart/form-data">
+
             {% csrf_token %}
-            
-            <!--thats how we write comments in html bro-->
-            <label for="file-chooser">choose a file to upload:</label>
-            <input type="file" accept=".pdf" id="file-chooser" name="uploaded-file">
-            <!-- the upload button-->
-             <button type="submit">Upload</button>
+
+            <div class="upload-area">
+
+                <input
+                    type="file"
+                    id="file-input"
+                    name="uploaded-file"
+                    accept=".pdf"
+                    required
+                >
+
+                <button type="submit">
+                    Upload your PDF
+                </button>
+
+            </div>
 
         </form>
-    <div>
-        <form >
-            <label for="questioner">Ask Questions abt the doc</label>
-            <textarea
-                rows="4"
-                cols="50"
-                placeholder="Ask questions about your pdf...."
-            ></textarea>
-            <button type="submit">&uparrow;</button>
+
+
+        <!-- QUESTION -->
+
+        <form id="question-form"
+              method="POST"
+              action="/router/questions/">
+
+            {% csrf_token %}
+
+            <div class="question-area">
+
+                <textarea
+                    id="question-input"
+                    name="question"
+                    rows="1"
+                    placeholder="Ask something about your PDF..."
+                    required
+                ></textarea>
+
+                <button type="submit">
+                    ↑
+                </button>
+
+            </div>
+
         </form>
 
-    </div>
-    </div>
+    </main>
+
+
+    <script src="{% static 'router/app.js' %}"></script>
+
 </body>
-</html>    
+</html>

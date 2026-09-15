@@ -85,3 +85,10 @@ out = open("output.txt", "wb") wb stands for write binary - it opens files and  
 
 # day 15th 1st september 20206
 - learned to create index in pinecone and other pinecone functions to upsert, delete, querry, fetch. learned python tricks to assign parameter to expect a datatype such as def function (name:str, age:int), and **dict_name gives the content of the dict_name, list[i:i+batch], so on
+
+# day 20th 13-sep-2026 
+- mimicked how an experienced dev would debug a broken button in the UI. I started from the front end, checking console in inpect page and found the error. if I haven't found the error I would've gone to js, django urls, other backend functions related to the error. 
+
+# day 22nd 15-sep-2026
+- every browser has automatic instructions one of them is to find the favicon - an 16 x 16 sized icon to represent the site, if its not found the browser throughs 404 error. this error could be solved by giving our website an icon with the name favicon.ico or if you don't want an icon then dev could <link rel = "icon" href='data";base64,="> its an empty data uri shortcut to be placed inside head of html 
+request.POST, request.FILES behaves like a dictionary type object. so I shouldn't use () x , I should use []. = request.POST[''] 
