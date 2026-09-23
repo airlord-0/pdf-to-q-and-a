@@ -1,67 +1,87 @@
 const chatBox = document.getElementById("chat-box");
 const uploadForm = document.getElementById("upload-form");
-const questionForm= document.getElementById("question-form");
+const questionForm = document.getElementById("question-form");
 const questionInput = document.getElementById("question-input");
 
-function addMessage(text, type) {
 
-    const message = document.createElement("div");    // create an empty div element of html 
- 
-    message.classList.add("message"); // where message is a css class defined in html
+function addMessage(text, type) {
+    const message = document.createElement("div");
+
+    message.classList.add("message");
     message.classList.add(type + "-message");
 
-    const paragraph = document.createElement("p"); // js creates <p></p>
-    paragraph.textContent=text;
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
 
-    message.appendChild(paragraph);  // put the paragraph inside div of message
+    message.appendChild(paragraph);
+    chatBox.appendChild(message);
 
-    chatBox.appendChild(message); // first we created a div, appended div with paragraph now append this div in the actual chatbox
-
-    chatBox.scrollTop = chatBox.scrollHeight // automatically scroll to the end of the chat
-
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-uploadForm.addEventListener("submit", async function(event){    // when the question form is submitted, run this function
-    console.log("UPLOAD SUBMIT FIRED");
-    
-    event.preventDefault(); // when submitted a browser may refresh or follow default instructions, this code prevents it from happening 
 
+// PDF UPLOAD
+uploadForm.addEventListener("submit", async function (event) {
     event.preventDefault();
-    const formData = new FormData(uploadForm); // get the data from the html uploadForm
 
-    addMessage("uploading your PDF ...", "bot");
+    const formData = new FormData(uploadForm);
 
-    const response = await fetch(uploadForm.action, {   // fetch sends http request to a given url 
-        method: "POST",
-        body : formData // send the data to django 
-        // after sending the request to django await keeps the page unfreezed untill django response 
-    })
-    const data = await response.json(); 
+    addMessage("Uploading your PDF...", "bot");
 
-    addMessage(data.message,"bot");
+    try {
+        const response = await fetch(uploadForm.action, {
+            method: "POST",
+            body: formData
+        });
 
+        if (!response.ok) {
+            throw new Error(`Server returned ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        addMessage(data.message, "bot");
+
+    } catch (error) {
+        console.error("Upload error:", error);
+        addMessage("Something went wrong while uploading the PDF.", "bot");
+    }
 });
 
-// now lets work on the user question aim to send this question to django response 
 
+// QUESTION
 questionForm.addEventListener("submit", async function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
-    const question = questionInput.value.trim(); 
+    const question = questionInput.value.trim();
+
     if (!question) {
         return;
     }
 
-    addMessage(question, "user");
-    questionInput.value = "";
+    // Create FormData BEFORE clearing the input
     const formData = new FormData(questionForm);
 
-    const response = await fetch (questionForm.action,{
-        method: "POST",
-        body : formData
-    });
-    const data = await response.json();
+    addMessage(question, "user");
 
-    addMessage(data.answer,"bot");
+    questionInput.value = "";
 
+    try {
+        const response = await fetch(questionForm.action, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server returned ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        addMessage(data.answer, "bot");
+
+    } catch (error) {
+        console.error("Question error:", error);
+        addMessage("Something went wrong while processing your question.", "bot");
+    }
 });
