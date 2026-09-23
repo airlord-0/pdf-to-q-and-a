@@ -92,3 +92,8 @@ out = open("output.txt", "wb") wb stands for write binary - it opens files and  
 # day 22nd 15-sep-2026
 - every browser has automatic instructions one of them is to find the favicon - an 16 x 16 sized icon to represent the site, if its not found the browser throughs 404 error. this error could be solved by giving our website an icon with the name favicon.ico or if you don't want an icon then dev could <link rel = "icon" href='data";base64,="> its an empty data uri shortcut to be placed inside head of html 
 request.POST, request.FILES behaves like a dictionary type object. so I shouldn't use () x , I should use []. = request.POST[''] 
+
+# day 23 23-sep-2026
+- we don't upsert the question or its embeddings 
+- pdf -> chunks->embedings->vector database
+- question -> querry -> retrive similar chunks 
