@@ -1,11 +1,12 @@
-from pinecone import Pinecone,ServerlessSpec
+from pinecone import Pinecone
 from dotenv import load_dotenv
 
 load_dotenv ()
 
 pc = Pinecone()
 
-index=pc.Index("context")
+def get_index():
+    return pc.Index("context")
 
 def vectorbase_upsert (
     # : tells the python to expect assigned kind of parameters
@@ -45,12 +46,12 @@ def vectorbase_upsert (
         
     for i in range (0,len(vectors_to_upsert),batch_size) : 
         batch = vectors_to_upsert[ i: i+batch_size] # where batch_size is 100 so the loop is from 1-101,101th excluded
-        index.upsert(vectors=batch) # upsert(), has a parameter vectors, provided by pinecone pdk
+        get_index().upsert(vectors=batch) # upsert(), has a parameter vectors, provided by pinecone pdk
                                     # there are other functions -> index.delete(),querry(),fetch etc 
 
     print("successfully upserted records")
 
-        
+ 
        
     
     
