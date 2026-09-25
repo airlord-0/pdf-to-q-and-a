@@ -9,14 +9,14 @@
 <body>
     <div class="Heading">
     <h1>
-        This website turns your pdf into knowledge base 
+        This website turns your pdf into knowledge base
     </h1>
     </div>
-   
+
     <div>
         <form action="router/uploaded/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            
+
             <!--thats how we write comments in html bro-->
             <label for="file-chooser">choose a file to upload:</label>
             <input type="file" accept=".pdf" id="file-chooser" name="uploaded-file">
@@ -26,5 +26,59 @@
 
         </form>
     </div>
+
+    <section aria-labelledby="questions-heading">
+        <h2 id="questions-heading">Ask a question</h2>
+        <form id="question-form" action="{% url 'answer' %}" method="post">
+            {% csrf_token %}
+            <label for="question">Question</label>
+            <input id="question" name="question" type="text" required>
+            <button type="submit">Ask</button>
+        </form>
+
+        <p id="answer-status" role="status" aria-live="polite" hidden></p>
+        <section id="answer-container" aria-labelledby="answer-heading" hidden>
+            <h2 id="answer-heading">Answer</h2>
+            <p id="answer"></p>
+        </section>
+    </section>
+
+    <script>
+        const questionForm = document.getElementById("question-form");
+        const questionInput = document.getElementById("question");
+        const answerContainer = document.getElementById("answer-container");
+        const answerElement = document.getElementById("answer");
+        const statusElement = document.getElementById("answer-status");
+
+        questionForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            answerContainer.hidden = true;
+            statusElement.hidden = false;
+            statusElement.textContent = "Generating an answer…";
+
+            try {
+                const response = await fetch(questionForm.action, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                    },
+                    body: JSON.stringify({ question: questionInput.value }),
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.answer) {
+                    throw new Error(data.error || "No answer was returned.");
+                }
+
+                // textContent displays plain LLM output safely, rather than treating it as HTML.
+                answerElement.textContent = data.answer;
+                answerContainer.hidden = false;
+                statusElement.hidden = true;
+            } catch (error) {
+                statusElement.textContent = error.message || "Unable to display the answer.";
+            }
+        });
+    </script>
 </body>
-</html>    
+</html>
