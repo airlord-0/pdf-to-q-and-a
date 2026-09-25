@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+import json
+
+from django.http import HttpResponse, JsonResponse
 from django.core.files.storage import default_storage
-from router.pdfExtractor import pdf_extractor
-from router.chunker import text_splitter
-from router.embedder import gem_embedder
-from router.database import vectorbase_upsert
+from django.views.decorators.http import require_POST
 
 
 
@@ -16,8 +15,21 @@ from router.database import vectorbase_upsert
 def website (request):
     return render(request,'index.html')
 
+
+def generate_answer(question):
+    """Import the LLM integration only when an answer is requested."""
+    from router.llm import answer_question
+
+    return answer_question(question)
+
+
 # file upload page 
 def uploaded (request):
+    from router.pdfExtractor import pdf_extractor
+    from router.chunker import text_splitter
+    from router.embedder import gem_embedder
+    from router.database import vectorbase_upsert
+
     # get the file path
     uploaded_file = request.FILES['uploaded-file']
     file_path = default_storage.save (
@@ -53,4 +65,25 @@ def uploaded (request):
 
     return HttpResponse(f"file uploaded successfully : {str(file_path)}")
 
-  
+
+@require_POST
+def answer(request):
+    """Return an LLM answer as JSON for the question form on the home page."""
+    try:
+        payload = json.loads(request.body or "{}")
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "The request body must be valid JSON."}, status=400)
+
+    question = payload.get("question", "").strip()
+    if not question:
+        return JsonResponse({"error": "Please enter a question."}, status=400)
+
+    try:
+        generated_answer = generate_answer(question)
+    except Exception:
+        return JsonResponse(
+            {"error": "Unable to generate an answer right now. Please try again."},
+            status=502,
+        )
+
+    return JsonResponse({"answer": generated_answer})

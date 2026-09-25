@@ -6,5 +6,6 @@ from router import views
 urlpatterns = [
     path('',views.website),
     path('uploaded/',views.uploaded),
+    path('answer/', views.answer, name='answer'),
     
 ]
