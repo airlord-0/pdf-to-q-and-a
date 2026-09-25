@@ -16,11 +16,22 @@ def similarToQuestion (user_question) :
     # query the index for most similar chunks 
     response = get_index().query (
         vector = question_vector,
-        top_k = 3, 
+        top_k = 1, 
         include_metadata = True
         
     )
+    results = get_index().query (vector = question_vector,
+            top_k = 1, 
+            include_metadata = True)
+    print("********** here are the results **********")
+    print(results.matches)
     # access matching chunks 
+    print("*********the for loop ***********")
+    context = []
     for match in response['matches'] : 
         print(f"Score: {match['score']}")       # Similarity score
         print(f"Text: {match['metadata']['text']}")
+        context.append(match['metadata']['text'])
+
+    llm_context = (user_question, context)
+    return llm_context

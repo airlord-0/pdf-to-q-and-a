@@ -6,6 +6,7 @@ from router.chunker import text_splitter
 from router.embedder import gem_embedder
 from router.database import vectorbase_upsert
 from router.retriver import similarToQuestion
+from router.llm import generate_answer
 
 def home(request) :
     return render(request,"index.html") 
@@ -44,15 +45,21 @@ def uploaded(request) :
         "server says" : f"{uploaded_file.name} uploaded successfully "
     })
 
+
 def questions(request) :
     # get the user question from the server and print it 
 
     questions = request.POST['question']
     print("question received ", questions)
-    similarToQuestion(questions)
+    
+    
+
+    Llmfeed = similarToQuestion(questions)
+
+    answer =generate_answer(Llmfeed)
 
 
     return JsonResponse ({
-        "answer" : f"{questions} has been received  "
+        "bot" : answer
     })
      
