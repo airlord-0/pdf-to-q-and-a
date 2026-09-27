@@ -7,10 +7,10 @@ load_dotenv()
 
 client = genai.Client()
 
-def generate_answer (llm_feed) : 
+def generate_answer (prompt) : 
     result = client.models.generate_content (
                 model= "gemini-3.5-flash-lite",
-                contents = llm_feed
+                contents = prompt
             )
-    print(result.text)
+    return result.text
 

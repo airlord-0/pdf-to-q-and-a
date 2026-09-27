@@ -5,7 +5,7 @@ from router.pdfExtractor import pdf_extractor
 from router.chunker import text_splitter
 from router.embedder import gem_embedder
 from router.database import vectorbase_upsert
-from router.retriver import similarToQuestion
+from router.retriver import context_generator
 from router.llm import generate_answer
 
 def home(request) :
@@ -54,12 +54,14 @@ def questions(request) :
     
     
 
-    Llmfeed = similarToQuestion(questions)
+    prompt = context_generator(questions)
+    print("*******llm feed ***************")
+    print(prompt)
 
-    answer =generate_answer(Llmfeed)
+    answer =generate_answer(prompt)
 
 
     return JsonResponse ({
-        "bot" : answer
+        "answer" : answer
     })
      
