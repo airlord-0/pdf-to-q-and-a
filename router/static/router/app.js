@@ -20,7 +20,8 @@ function addMessage(text, type) {
 }
 
 
-// PDF UPLOAD
+
+// pdf upload
 uploadForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -31,7 +32,7 @@ uploadForm.addEventListener("submit", async function (event) {
     try {
         const response = await fetch(uploadForm.action, {
             method: "POST",
-            body: formData
+            body: formData,
         });
 
         if (!response.ok) {
@@ -40,13 +41,15 @@ uploadForm.addEventListener("submit", async function (event) {
 
         const data = await response.json();
 
-        addMessage(data.message, "bot");
+        // Print the message from backend if present; otherwise fallback to default text
+        addMessage(data.message || "PDF uploaded successfully!", "bot");
 
     } catch (error) {
         console.error("Upload error:", error);
         addMessage("Something went wrong while uploading the PDF.", "bot");
     }
 });
+
 
 
 // QUESTION
@@ -84,4 +87,11 @@ questionForm.addEventListener("submit", async function (event) {
         console.error("Question error:", error);
         addMessage("Something went wrong while processing your question.", "bot");
     }
+});
+
+questionInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    questionForm.requestSubmit();
+  }
 });
