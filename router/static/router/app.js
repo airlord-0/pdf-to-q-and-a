@@ -19,8 +19,6 @@ function addMessage(text, type) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-
-
 // pdf upload
 uploadForm.addEventListener("submit", async function (event) {
     event.preventDefault();

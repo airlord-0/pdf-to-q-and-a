@@ -97,3 +97,8 @@ request.POST, request.FILES behaves like a dictionary type object. so I shouldn'
 - we don't upsert the question or its embeddings 
 - pdf -> chunks->embedings->vector database
 - question -> querry -> retrive similar chunks 
+
+# day 25 02-sep-2026
+- pip freeze > requerments.txt prints me every dependency my project relies on and even prints it on the requirements.txt file automatically 
+- the manage.py, a deployment server can only serve one user, it crashes in real user traffic 
+- that's when gunicorn comes in, its job is to take whatever the user fills in the text boxes (html forms) parse the text so that django doesn't have to. this helping hand frees up django to run my piplines 
