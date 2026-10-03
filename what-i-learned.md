@@ -102,3 +102,8 @@ request.POST, request.FILES behaves like a dictionary type object. so I shouldn'
 - pip freeze > requerments.txt prints me every dependency my project relies on and even prints it on the requirements.txt file automatically 
 - the manage.py, a deployment server can only serve one user, it crashes in real user traffic 
 - that's when gunicorn comes in, its job is to take whatever the user fills in the text boxes (html forms) parse the text so that django doesn't have to. this helping hand frees up django to run my piplines 
+# day 26 03rd-sep-2026
+- Dynamic code like python,django are slow and heavy built to process pipelines servers, while static files such as css, js, images, documents which don't have to processed are lite and fast. 
+- the strategy is to employ whitenoise to serve these static files while django runs the pipeline
+- use gunicorn to process the frontend inputs for django. 
+- production servers do not know to crawl through the project folder and find the static files, thats where django's built in collectstatic comes in , it easily finds all the satic files stores a copy into a sinlge folder
