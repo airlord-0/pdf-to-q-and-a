@@ -40,6 +40,6 @@ def context_generator (user_question) :
     Question:
     {user_question}
     Answer the question using the context above.
-    If the answer cannot be found in the context, say that the information is not available in the document.
+    If the answer cannot be found in the context, say that the information is not available in the document. if user says hi, greet warmly and let them what you can do for them
     """
     return promtp

@@ -1,109 +1,128 @@
-# MY learning journey 
+# MY learning journey
 
 # day 2.   19th/july/2026
 - I learned how to make a website reacive fies
-` <input type="file"> ` 
-- revised how we link html file with css 
+` <input type="file"> `
+- revised how we link html file with css
 `<link rel="stylesheet" href="file_name.css">`
 
-- revised css 
+- revised css
 - anything inside head isn't visible. script in the <body> has effects on the website
 
 # day 3. 26th july 2026
 - learned how do we install django pip install django
-- we use django for backend purpose its a backend framework built for python 
+- we use django for backend purpose its a backend framework built for python
 - once its installed we go like python3 -m django --version to check its version
-* how do we start projects in django ? 
-- pyhton3 -m django startproject project_name 
-- once starting the project is finished we get to see a folder named after the project inside our project folder 
+* how do we start projects in django ?
+- pyhton3 -m django startproject project_name
+- once starting the project is finished we get to see a folder named after the project inside our project folder
 
-# day 4 27th july 2026 
-- learned how to create a veiw function using django.http response 
-- basically we make a function with requests attribute and return httpresponse 
-- we always end our routes with / 
+# day 4 27th july 2026
+- learned how to create a veiw function using django.http response
+- basically we make a function with requests attribute and return httpresponse
+- we always end our routes with /
 
 # day 5 31st july 2026 learned Routing
-- I got a basic idea how websites links have paths and how they work. 
+- I got a basic idea how websites links have paths and how they work.
 - Start by creating a new application in django using the command python3 manage.py startapp "App_Name"
-- once the app is created we create a function in views.py using HttpResponse we can requst and get responses 
+- once the app is created we create a function in views.py using HttpResponse we can requst and get responses
 - we create new urls file in application folder and map the views functions into urls file
-- after mapping we go to the main urls file use include library and include the paths in the application/urls.py 
+- after mapping we go to the main urls file use include library and include the paths in the application/urls.py
 - with this procedure we be able to do things like website/router/greetings or /mywebsite
-## I have successfully created a template then added my index.html into it, then added a function in views.py using render thing 
+## I have successfully created a template then added my index.html into it, then added a function in views.py using render thing
 - the day was nice I take it as a win learned a little bit understood there's a lot to learn
 
-## day 6 2nd august 2026 
-- learned how we write comments in HTML we use 
-    'html 
+## day 6 2nd august 2026
+- learned how we write comments in HTML we use
+    'html
     <!-- that's how you do it -->
-- learned how we make a functionig upload button in html 
+- learned how we make a functionig upload button in html
 
 ## day 7 14th august 2026
 - learned how you save files requested by html - save_file = request.FILES["uploaded_file"]
-- Learned a new Library pymupdf. we use this library to extract text out of pdfs 
+- Learned a new Library pymupdf. we use this library to extract text out of pdfs
 - Learned few syntax of pymupdf such as :
-* doc = pymupdf.open ("file_name") 
-out = open("output.txt", "wb") wb stands for write binary - it opens files and   writes binary in it 
-- for page in doc : 
+* doc = pymupdf.open ("file_name")
+out = open("output.txt", "wb") wb stands for write binary - it opens files and   writes binary in it
+- for page in doc :
     text = page.get_text().encode("utf-8")
     out.write(text)
     out.write((12,)) # this tells editor to use new file
     out.close
 # I feel like this project is teaching me lot 10x more than any college ever would
 
-## day 8 18th august 2026 
-- learned CHUNKING, splitting a big document into smaller units so that It could fit in strict context size window of embedding models and LLMs 
-- Leaned how we split text using langchain's RecursiveCharacterTextSplitter and store these in langchain's Documents with calculated metadata 
+## day 8 18th august 2026
+- learned CHUNKING, splitting a big document into smaller units so that It could fit in strict context size window of embedding models and LLMs
+- Leaned how we split text using langchain's RecursiveCharacterTextSplitter and store these in langchain's Documents with calculated metadata
 - spent 5 hours on finding the best chunking method for me and learning the actual production grade code from [data_bricks](https://community.databricks.com/t5/technical-blog/the-ultimate-guide-to-chunking-strategies-for-rag-applications/ba-p/113089)
 
-### my learning strategy : 20% consume 80% apply been super effective so far 
+### my learning strategy : 20% consume 80% apply been super effective so far
 
-## day 9 23rd august 2026 
-- learned google SDK, got the "google-gemini-embedder" api key and wrote a simple code to check its functioning 
-- the Problem is my chunker.py is returning Documets which includes page_contents and meta data and my api key has no idea how to deal with it - I would have to figure chunker to return sufficient page_content and instruct api to batch process it 
+## day 9 23rd august 2026
+- learned google SDK, got the "google-gemini-embedder" api key and wrote a simple code to check its functioning
+- the Problem is my chunker.py is returning Documets which includes page_contents and meta data and my api key has no idea how to deal with it - I would have to figure chunker to return sufficient page_content and instruct api to batch process it
 
-## day 10 25th august 2026 
-- hit a Problem : number of chunks are 8 while number of embeddings my embedder.py is generating 1 embedding. 
+## day 10 25th august 2026
+- hit a Problem : number of chunks are 8 while number of embeddings my embedder.py is generating 1 embedding.
 - the solution : in chunker.py "chunks" is a list of strings, each string is my individual chunk to be embedded. I can pass each string one by one to the api key making number of api calls = number of strings in the "chunks"
 - milestone 2 : Embeddings completes :)
 
-## day 11 28th august 2026 
+## day 11 28th august 2026
 - Found a way to store my embeddings for free :) Big thanks to Pinecone — they gave me an API key the moment I signed up. 0 clicks.
 - Turns out storing embeddings isn't as simple as appending them one by one. I need to build a system that stores a searchable representation of the knowledge in my documents.
-- there's another pipeline for querry as 
-- user questions -> convert questoin to embeddings with same api -> compare the question embeddings with stored embeddings -> find the most relavent chunk -> pack chunk + question -> send it to the llm -> print the result 
+- there's another pipeline for querry as
+- user questions -> convert questoin to embeddings with same api -> compare the question embeddings with stored embeddings -> find the most relavent chunk -> pack chunk + question -> send it to the llm -> print the result
 
-# day 12 29th august 2026 
-- its interesting that each service related to software has its own sdk software development kit. Different different kits come with its own syntax and stype 
+# day 12 29th august 2026
+- its interesting that each service related to software has its own sdk software development kit. Different different kits come with its own syntax and stype
 
 # day 13 30th aug 2026
-- learned how to structure the data my functions are producing. 
+- learned how to structure the data my functions are producing.
 - how to get a function return 2 things and store them in 2 objects
-- my chunker.py returns units and metadata, I can do a,b = function(text) to store a=units and b = metadata. later pass these units to embedder.py 
-- now I know how to store all these units_id,unit_contents, units embeddings in pinecone index 
-- make a function that takes all these 3 attributes and upsert this to the database. 
+- my chunker.py returns units and metadata, I can do a,b = function(text) to store a=units and b = metadata. later pass these units to embedder.py
+- now I know how to store all these units_id,unit_contents, units embeddings in pinecone index
+- make a function that takes all these 3 attributes and upsert this to the database.
 
 # day 15th 1st september 20206
 - learned to create index in pinecone and other pinecone functions to upsert, delete, querry, fetch. learned python tricks to assign parameter to expect a datatype such as def function (name:str, age:int), and **dict_name gives the content of the dict_name, list[i:i+batch], so on
 
-# day 20th 13-sep-2026 
-- mimicked how an experienced dev would debug a broken button in the UI. I started from the front end, checking console in inpect page and found the error. if I haven't found the error I would've gone to js, django urls, other backend functions related to the error. 
+# day 20th 13-sep-2026
+- mimicked how an experienced dev would debug a broken button in the UI. I started from the front end, checking console in inpect page and found the error. if I haven't found the error I would've gone to js, django urls, other backend functions related to the error.
 
 # day 22nd 15-sep-2026
-- every browser has automatic instructions one of them is to find the favicon - an 16 x 16 sized icon to represent the site, if its not found the browser throughs 404 error. this error could be solved by giving our website an icon with the name favicon.ico or if you don't want an icon then dev could <link rel = "icon" href='data";base64,="> its an empty data uri shortcut to be placed inside head of html 
-request.POST, request.FILES behaves like a dictionary type object. so I shouldn't use () x , I should use []. = request.POST[''] 
+- every browser has automatic instructions one of them is to find the favicon - an 16 x 16 sized icon to represent the site, if its not found the browser throughs 404 error. this error could be solved by giving our website an icon with the name favicon.ico or if you don't want an icon then dev could <link rel = "icon" href='data";base64,="> its an empty data uri shortcut to be placed inside head of html
+request.POST, request.FILES behaves like a dictionary type object. so I shouldn't use () x , I should use []. = request.POST['']
 
 # day 23 23-sep-2026
-- we don't upsert the question or its embeddings 
+- we don't upsert the question or its embeddings
 - pdf -> chunks->embedings->vector database
-- question -> querry -> retrive similar chunks 
+- question -> querry -> retrive similar chunks
 
 # day 25 02-sep-2026
-- pip freeze > requerments.txt prints me every dependency my project relies on and even prints it on the requirements.txt file automatically 
-- the manage.py, a deployment server can only serve one user, it crashes in real user traffic 
-- that's when gunicorn comes in, its job is to take whatever the user fills in the text boxes (html forms) parse the text so that django doesn't have to. this helping hand frees up django to run my piplines 
+- pip freeze > requerments.txt prints me every dependency my project relies on and even prints it on the requirements.txt file automatically
+- the manage.py, a deployment server can only serve one user, it crashes in real user traffic
+- that's when gunicorn comes in, its job is to take whatever the user fills in the text boxes (html forms) parse the text so that django doesn't have to. this helping hand frees up django to run my piplines
 # day 26 03rd-sep-2026
-- Dynamic code like python,django are slow and heavy built to process pipelines servers, while static files such as css, js, images, documents which don't have to processed are lite and fast. 
+- Dynamic code like python,django are slow and heavy built to process pipelines servers, while static files such as css, js, images, documents which don't have to processed are lite and fast.
 - the strategy is to employ whitenoise to serve these static files while django runs the pipeline
-- use gunicorn to process the frontend inputs for django. 
+- use gunicorn to process the frontend inputs for django.
 - production servers do not know to crawl through the project folder and find the static files, thats where django's built in collectstatic comes in , it easily finds all the satic files stores a copy into a sinlge folder
+- django comes with sqlite3 built in. Its serverless sql system literally a file in the local drive runs locally. once a user is useing filesystem the server locks up and the other user has to wait.
+- this is where postgreSQL comes in, its a server based service runs on dedicated server, it allows multiple users to use the website
+
+# day 27 29th-oct-2026
+pip freeze > requirements.txt : this guy stores all the python packages names with their versions in the requirements.txt file.
+this way my user would be able to download all the packages by pip install -r requirements.txt
+
+build.sh is a shell script used in software development.
+why do I need it ?
+- it automates the process of building and preparing an application for deployment by executing a set of instructions
+- installs dependencies on its own
+ set -o errexit : it exists if there's an error, this way I won't be deploying any broken app.
+pip install thing : it installs all the packages required to run my application
+python manage.py collectstatic --no-input stuffs all the static files into one folder for fast accessing.
+python manage.py migrate this applies new database changes to older versions of the applications, if I introduce new feature, it would be applied
+
+# day 28 30th-oct-2026
+- shebang, we code in top of the build.sh file. #!/user/bin/env bash it tells the os to execute the commands in bash shell.
+- different devices have bash installed in different paths so using env helps locate bash

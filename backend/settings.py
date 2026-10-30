@@ -37,6 +37,7 @@ SECURE_HSTS_SECONDS = 3600
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
+
 ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
     "localhost,127.0.0.1"
@@ -141,6 +142,9 @@ MEDIA_ROOT = BASE_DIR / 'media' # this is whre user uploaded files go
 
 # whitenoise managing static files for django 
 STORAGES = {
+    "default" : {
+        "BACKEND" : "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },

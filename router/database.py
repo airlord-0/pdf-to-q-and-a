@@ -50,7 +50,7 @@ def vectorbase_upsert (
                                     # there are other functions -> index.delete(),querry(),fetch etc 
 
     print("successfully upserted records")
-
+    get_index().delete(delete_all=True)
  
        
     
