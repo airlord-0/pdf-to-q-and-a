@@ -38,11 +38,7 @@ SECURE_HSTS_SECONDS = 3600
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1",
-    '://onrender.com'
-).split(",")
+ALLOWED_HOSTS = ['://onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
